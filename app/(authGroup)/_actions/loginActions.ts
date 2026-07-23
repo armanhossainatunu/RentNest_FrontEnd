@@ -1,7 +1,9 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 type LoginState = {
-  suscess: boolean;
+  success: boolean;
   statusCode: number;
   message: string;
   data: {
@@ -30,8 +32,21 @@ export const loginAction = async (
     },
     body: JSON.stringify(paylode),
   });
-  const result = await res.json();
+  const result: LoginState = await res.json();
 
-  console.log(result);
+  if (result.success) {
+    const cookieStore = cookies();
+    (await cookieStore).set("accessToken", result.data.accessToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24,
+      sameSite: "lax",
+    });
+    (await cookieStore).set("refreshToken", result.data.refreshToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: "lax",
+    });
+  }
+
   return result;
 };
