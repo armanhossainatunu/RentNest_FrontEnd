@@ -4,10 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { loginAction } from "../_actions/loginActions";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
 const LoginForm = () => {
+  const [state, action, loading] = useActionState(loginAction, false);
+
+  useEffect(() => {
+    if (!state) return;
+    if (state.success) {
+      toast.success(state.message);
+    }
+
+    if (!state.success) {
+      toast.error(state.error );
+    }
+  }, [state]);
+
   return (
-    <form action={loginAction} className="space-y-4">
+    <form action={action} className="space-y-4">
       <Card className="p-5 space-y-4 rounded-sm">
         <Input
           name="email"
@@ -21,7 +36,7 @@ const LoginForm = () => {
           placeholder="Enter your password"
           required
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
       </Card>
     </form>
   );
