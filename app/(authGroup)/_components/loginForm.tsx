@@ -6,20 +6,22 @@ import { Input } from "@/components/ui/input";
 import { loginAction } from "../_actions/loginActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
-  const [state, action, loading] = useActionState(loginAction, false);
 
+  const [state, action, loading] = useActionState(loginAction, false);
+  const router = useRouter();
   useEffect(() => {
-    if (!state) return;
+    if (!state.message) return;
+
     if (state.success) {
       toast.success(state.message);
+      router.push("/dashboard");
+    } else {
+      toast.error(state.error);
     }
-
-    if (!state.success) {
-      toast.error(state.error );
-    }
-  }, [state]);
+  }, [state, router]);
 
   return (
     <form action={action} className="space-y-4">

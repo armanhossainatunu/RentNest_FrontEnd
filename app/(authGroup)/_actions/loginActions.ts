@@ -2,10 +2,11 @@
 
 import { cookies } from "next/headers";
 
-type LoginState = {
+export  type LoginState = {
   success: boolean;
   statusCode: number;
   message: string;
+  error: string;
   data: {
     accessToken: string;
     refreshToken: string;
@@ -32,7 +33,7 @@ export const loginAction = async (
     },
     body: JSON.stringify(paylode),
   });
-  const result: LoginState = await res.json();
+  const result = await res.json();
 
   if (result.success) {
     const cookieStore = cookies();
