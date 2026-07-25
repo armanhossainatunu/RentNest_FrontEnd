@@ -11,6 +11,12 @@ export async function getMe() {
         headers: {
            cookie: `accessToken=${accessToken}`
         },
+        cache: "force-cache",
+        next:{
+            // validate: 60 * 60 * 24,
+            revalidate: 60 * 60 * 24,
+            tags: ["my-profile"]
+        }
     })
     const result = await res.json()
     console.log(result);

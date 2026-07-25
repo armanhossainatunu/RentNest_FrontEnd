@@ -18,6 +18,7 @@ import {
   CreditCard,
   CircleUserRound,
 } from "lucide-react";
+import { logout } from "@/service/logout";
 
 // Navigation items array
 const navItems = [
@@ -82,6 +83,13 @@ type NavbarProps = {
   user: Iuser;
 };
 export function Navbar({ user }: NavbarProps) {
+  const handleLogout = async (action: string) => {
+    console.log(`user logout ${action}`);
+    if (action === "logout") {
+      await logout();
+    }
+  };
+
   return (
     <nav className="border-b border-border bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -136,7 +144,7 @@ export function Navbar({ user }: NavbarProps) {
 
                 <div className="flex flex-col gap-1 truncate">
                   <p className="text-sm font-medium text-foreground truncate">
-                 {user.data.profile.name}
+                    {user.data.profile.name}
                   </p>
                   <p className="text-xs text-muted-foreground truncate">
                     {user.data.profile.email}
@@ -167,7 +175,9 @@ export function Navbar({ user }: NavbarProps) {
               {/* Logout */}
               <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50">
                 <LogOut className="h-4 w-4" />
-                <span>Logout</span>
+                <span onClick={async () => await handleLogout("logout")}>
+                  Logout
+                </span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
