@@ -5,7 +5,10 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/shared/navbar";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const inter = Inter({ 
+  subsets: ["latin"], 
+  variable: "--font-sans" 
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rent Nest | Home",
+  title: "Welcome to Rent Nest",
   description: "This is a renting app",
 };
 
@@ -30,19 +33,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
         geistSans.variable,
         geistMono.variable,
         "font-sans",
-        inter.variable,
+        inter.variable
       )}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar/>
         <Toaster position="top-right" richColors />
-
         {children}
       </body>
     </html>

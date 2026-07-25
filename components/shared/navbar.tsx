@@ -34,8 +34,54 @@ const userMenuItems = [
   { label: "Billing", icon: CreditCard, href: "/billing" },
   { label: "Settings", icon: Settings, href: "/settings" },
 ];
+//  "success": true,
+//   "statusCode": 200,
+//   "message": "user Profile get suscessfuly",
+//   "data": {
+//       "profile": {
+//           "id": "f86fc7ab-64ce-4e86-8c39-33c5e0b9d874",
+//           "name": "Tenant",
+//           "email": "tenant@rentnest.com",
+//           "status": "ACTIVE",
+//           "role": "TENANT",
+//           "createdAt": "2026-07-17T15:02:15.167Z",
+//           "updatedAt": "2026-07-17T15:02:15.167Z",
+//           "profile": {
+//               "id": "79756a07-5d67-4a1d-a0b5-8f79c59ebebf",
+//               "profilePhoto": "www.google.com",
+//               "bio": null,
+//               "userId": "f86fc7ab-64ce-4e86-8c39-33c5e0b9d874"
+//           }
+//       }
+//   }
 
-export function Navbar() {
+type Iuser = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    profile: {
+      id: string;
+      name: string;
+      email: string;
+      status: string;
+      role: string;
+      createdAt: string;
+      updatedAt: string;
+      profile: {
+        id: string;
+        profilePhoto: string;
+        bio: null;
+        userId: string;
+      };
+    };
+  };
+};
+
+type NavbarProps = {
+  user: Iuser;
+};
+export function Navbar({ user }: NavbarProps) {
   return (
     <nav className="border-b border-border bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,10 +136,10 @@ export function Navbar() {
 
                 <div className="flex flex-col gap-1 truncate">
                   <p className="text-sm font-medium text-foreground truncate">
-                    John Doe
+                 {user.data.profile.name}
                   </p>
                   <p className="text-xs text-muted-foreground truncate">
-                    john@example.com
+                    {user.data.profile.email}
                   </p>
                 </div>
               </div>
