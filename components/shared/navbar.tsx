@@ -19,6 +19,8 @@ import {
   CircleUserRound,
 } from "lucide-react";
 import { logout } from "@/service/logout";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Navigation items array
 const navItems = [
@@ -35,26 +37,6 @@ const userMenuItems = [
   { label: "Billing", icon: CreditCard, href: "/billing" },
   { label: "Settings", icon: Settings, href: "/settings" },
 ];
-//  "success": true,
-//   "statusCode": 200,
-//   "message": "user Profile get suscessfuly",
-//   "data": {
-//       "profile": {
-//           "id": "f86fc7ab-64ce-4e86-8c39-33c5e0b9d874",
-//           "name": "Tenant",
-//           "email": "tenant@rentnest.com",
-//           "status": "ACTIVE",
-//           "role": "TENANT",
-//           "createdAt": "2026-07-17T15:02:15.167Z",
-//           "updatedAt": "2026-07-17T15:02:15.167Z",
-//           "profile": {
-//               "id": "79756a07-5d67-4a1d-a0b5-8f79c59ebebf",
-//               "profilePhoto": "www.google.com",
-//               "bio": null,
-//               "userId": "f86fc7ab-64ce-4e86-8c39-33c5e0b9d874"
-//           }
-//       }
-//   }
 
 type Iuser = {
   success: boolean;
@@ -83,10 +65,13 @@ type NavbarProps = {
   user: Iuser;
 };
 export function Navbar({ user }: NavbarProps) {
+  const router = useRouter();
   const handleLogout = async (action: string) => {
     console.log(`user logout ${action}`);
     if (action === "logout") {
       await logout();
+      toast.success("Logout successful");
+      router.push("/login");
     }
   };
 
@@ -117,70 +102,80 @@ export function Navbar({ user }: NavbarProps) {
           </div>
 
           {/* User Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div
-                // variant="ghost"
-                className="cursor-pointer"
-              >
-                <CircleUserRound />
-                {/* <Avatar className="h-10 w-10">
+          {user?.success ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div
+                  // variant="ghost"
+                  className="cursor-pointer"
+                >
+                  <CircleUserRound />
+                  {/* <Avatar className="h-10 w-10">
                   <AvatarImage
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                   />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar> */}
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              {/* User Info Section */}
-              <div className="flex items-center gap-3 px-2 py-1.5">
-                {/* <Avatar className="h-8 w-8">
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                {/* User Info Section */}
+                <div className="flex items-center gap-3 px-2 py-1.5">
+                  {/* <Avatar className="h-8 w-8">
                   <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar> */}
-                <CircleUserRound />
+                  <CircleUserRound />
 
-                <div className="flex flex-col gap-1 truncate">
-                  <p className="text-sm font-medium text-foreground truncate">
-                    {user.data.profile.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {user.data.profile.email}
-                  </p>
+                  <div className="flex flex-col gap-1 truncate">
+                    <p className="text-sm font-medium text-foreground truncate">
+                      {user?.data.profile.name || "Name"}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {user?.data.profile.email || "Email"}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
 
-              {/* Menu Items */}
-              <DropdownMenuGroup>
-                {userMenuItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <DropdownMenuItem key={item.href} asChild>
-                      <Link
-                        href={item.href}
-                        className="flex items-center gap-2 cursor-pointer"
-                      >
-                        <Icon className="h-4 w-4" />
-                        <span>{item.label}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
+                {/* Menu Items */}
+                <DropdownMenuGroup>
+                  {userMenuItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link
+                          href={item.href}
+                          className="flex items-center gap-2 cursor-pointer"
+                        >
+                          <Icon className="h-4 w-4" />
+                          <span>{item.label}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
 
-              {/* Logout */}
-              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50">
-                <LogOut className="h-4 w-4" />
-                <span onClick={async () => await handleLogout("logout")}>
-                  Logout
-                </span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                {/* Logout */}
+                <DropdownMenuItem
+                  onClick={async () => await handleLogout("logout")}
+                  className="flex items-center gap-2 cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link
+              href="/login"
+             className="font-normal text-xl text-foreground hover:text-primary  transition-colors"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
