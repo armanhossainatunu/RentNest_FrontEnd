@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
 
-export  type LoginState = {
+export type LoginState = {
   success: boolean;
   statusCode: number;
   message: string;
@@ -19,10 +19,10 @@ export const loginAction = async (
   prevState: LoginState,
   formData: FormData,
 ) => {
-  console.log(prevState, "this  is prevstate");
+  // console.log(prevState, "this  is prevstate");
   const email = formData.get("email");
   const password = formData.get("password");
-  console.log(email, password);
+  // console.log(email, password);
   const paylode = {
     email,
     password,
@@ -49,16 +49,19 @@ export const loginAction = async (
       maxAge: 60 * 60 * 24 * 7,
       sameSite: "lax",
     });
+    // redirect("/Admin_Dashboard");
+    const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+    // console.log(decodedToken, "decodedToken");
 
-    const decodedToken =  jwt.decode(result.data.accessToken) as JwtPayload ;
+    if (decodedToken.role === "ADMIN") {
+      redirect("/Admin_Dashboard");
+    } else if (decodedToken.role === "LANDLORD") {
+      redirect("/Landlord_Dashboard");
+    } else if (decodedToken.role === "TENANT") {
+      redirect("/Tenant_Dashboard");
+    }
 
-
-if(decodedToken.role === "Admin"){
-  redirect("/Admin_Dashboard")
-   
-  }
-
-    console.log(decodedToken, "decodedToken");
+    // console.log(decodedToken, "decodedToken");
   }
 
   return result;
