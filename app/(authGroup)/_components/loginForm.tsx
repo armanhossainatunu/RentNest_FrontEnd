@@ -11,17 +11,15 @@ import { useRouter } from "next/navigation";
 const LoginForm = () => {
 
   const [state, action, loading] = useActionState(loginAction, false);
-  const router = useRouter();
   useEffect(() => {
     if (!state.message) return;
 
     if (state.success) {
       toast.success(state.message);
-      router.push("/dashboard");
     } else {
       toast.error(state.error);
     }
-  }, [state, router]);
+  }, [state]);
 
   return (
     <form action={action} className="space-y-4">

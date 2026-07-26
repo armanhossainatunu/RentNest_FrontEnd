@@ -1,6 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { redirect } from "next/navigation";
 
 export  type LoginState = {
   success: boolean;
@@ -47,6 +49,16 @@ export const loginAction = async (
       maxAge: 60 * 60 * 24 * 7,
       sameSite: "lax",
     });
+
+    const decodedToken =  jwt.decode(result.data.accessToken) as JwtPayload ;
+
+
+if(decodedToken.role === "Admin"){
+  redirect("/Admin_Dashboard")
+   
+  }
+
+    console.log(decodedToken, "decodedToken");
   }
 
   return result;
