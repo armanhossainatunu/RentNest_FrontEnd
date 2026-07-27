@@ -13,7 +13,6 @@ const LoginForm = () => {
   const [state, action, loading] = useActionState(loginAction, false);
   useEffect(() => {
     if (!state.message) return;
-
     if (state.success) {
       toast.success(state.message);
     } else {
