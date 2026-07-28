@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
-import { Navbar } from "@/components/shared/navbar";
 
 const inter = Inter({ 
   subsets: ["latin"], 
@@ -21,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Welcome to Rent Nest",
+  title: "Welcome to RentNest",
   description: "This is a renting app",
 };
 

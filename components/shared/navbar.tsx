@@ -83,7 +83,7 @@ export function Navbar({ user }: NavbarProps) {
             href="/"
             className="font-bold text-xl text-foreground hover:text-primary transition-colors"
           >
-            MyApp
+            RentNest
           </Link>
           {/* Logo */}
           <div className="flex items-center gap-8">
@@ -171,7 +171,7 @@ export function Navbar({ user }: NavbarProps) {
           ) : (
             <Link
               href="/login"
-             className="font-normal text-xl text-foreground hover:text-primary  transition-colors"
+              className="bg-gray-400 px-2 py-1 rounded-sm  font-normal text-xl text-foreground hover:text-primary  transition-colors"
             >
               Login
             </Link>

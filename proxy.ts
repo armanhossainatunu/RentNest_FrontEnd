@@ -58,6 +58,6 @@ export const config = {
     // "/admin_Dashboard/:path*",
     // "/Landlord_Dashboard/:path*",
     // "/Tenant_Dashboard/:path*",
-    "/((?!api|_next/static|_next/image|.*\\.png$).*)",
+    "/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)",
   ],
 };

@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/shared/navbar";
 import { getMe } from "@/service/getMe";
-import Image from "next/image";
+
 
 export default async function Home() {
   const user = await getMe()

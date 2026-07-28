@@ -6,15 +6,15 @@ import { Input } from "@/components/ui/input";
 import { loginAction } from "../_actions/loginActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const LoginForm = () => {
-
   const [state, action, loading] = useActionState(loginAction, false);
   useEffect(() => {
     if (!state.message) return;
     if (state.success) {
       toast.success(state.message);
+    
     } else {
       toast.error(state.error);
     }
@@ -36,6 +36,7 @@ const LoginForm = () => {
           required
         />
         <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
+       <span className="text-center">Don&apos;t have an account? <Link href="/register">Register</Link></span>
       </Card>
     </form>
   );
