@@ -36,7 +36,7 @@ const LoginForm = () => {
           required
         />
         <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
-       <span className="text-center">Don&apos;t have an account? <Link href="/register">Register</Link></span>
+       <span className="text-center">Don&apos;t have an account? <Link href="/register" className="hover:underline hover:text-primary">Register</Link></span>
       </Card>
     </form>
   );

@@ -35,8 +35,9 @@ const RegisterForm = () => {
   }, [state, router]);
 
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="space-y-4 w-sm">
       <Card className="p-5 space-y-4 rounded-sm">
+        <h1 className="text-center text-3xl font-bold">Register</h1>
         <Input name="name" placeholder="Enter your name" required />
 
         <Input
@@ -67,7 +68,7 @@ const RegisterForm = () => {
           Already have an account?
           <Link
             href="/auth/login"
-            className="ml-1 text-primary hover:underline"
+            className="ml-1 hover:text-primary hover:underline"
           >
             Login
           </Link>

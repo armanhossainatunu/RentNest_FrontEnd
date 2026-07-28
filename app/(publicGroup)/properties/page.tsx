@@ -1,9 +1,10 @@
 import React from 'react'
 
 const Publicpage = () => {
+  
   return (
     <div>
-      this id public page
+      <h1>Public page</h1>
     </div>
   )
 }
