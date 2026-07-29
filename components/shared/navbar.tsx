@@ -77,7 +77,7 @@ export function Navbar({ user }: NavbarProps) {
 
   return (
     <nav className="border-b border-border bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between h-16">
           <Link
             href="/"
