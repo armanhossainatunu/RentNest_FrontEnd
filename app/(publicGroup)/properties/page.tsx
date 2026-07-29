@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getProperties } from "./_actions/propertiesActions";
+import Link from "next/link";
 
 export default async function Properties() {
   const properties = await getProperties();
@@ -26,6 +27,8 @@ export default async function Properties() {
         {properties.data?.map((property: any) => (
           <div key={property.id} className="border mt-2">
             <img src={property.thumbnail} alt={property.title} />
+            {/* <p>{property?.review.rating}</p> */}
+              ({property.reviews.length} Reviews)
             <h2>{property.title}</h2>
             <p>{property.price}</p>
             <p>{property.location}</p>
@@ -33,13 +36,19 @@ export default async function Properties() {
               <p>Category:{property.category}</p>
               <p>Views:{property.views}</p>
             </div>
+             <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        
+          {property.author.name}
+        </div>
             <div className="flex justify-between px-2 pb-3">
               <Button className="bg-green-400 py-3 px-6 text-white rounded-xl">
                 Book Now
               </Button>
-              <Button className="bg-green-400 py-3 px-6 text-white rounded-xl">
-                Details
-              </Button>
+               <Button asChild>
+            <Link href={`/properties/${property.id}`}>
+              View Details
+            </Link>
+          </Button>
             </div>
           </div>
         ))}
