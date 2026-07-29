@@ -43,6 +43,8 @@ if(parthname.startsWith("/admin_Dashboard") && userRole !== "ADMIN")
   return NextResponse.redirect(new URL("/not-found", request.url));
 if(parthname.startsWith("/Landlord_Dashboard") && userRole !== "LANDLORD")
   return NextResponse.redirect(new URL("/not-found", request.url));
+if(parthname.startsWith("/propertiesCreate") && userRole !== "LANDLORD")
+  return NextResponse.redirect(new URL("/not-found", request.url));
 if(parthname.startsWith("/Tenant_Dashboard") && userRole !== "TENANT")
   return NextResponse.redirect(new URL("/not-found", request.url));
 

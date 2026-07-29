@@ -34,3 +34,26 @@ export type RegisterState = {
     };
   };
 };
+// User Type
+export type Iuser = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    profile: {
+      id: string;
+      name: string;
+      email: string;
+      status: string;
+      role: string;
+      createdAt: string;
+      updatedAt: string;
+      profile: {
+        id: string;
+        profilePhoto: string;
+        bio: null;
+        userId: string;
+      };
+    };
+  };
+};

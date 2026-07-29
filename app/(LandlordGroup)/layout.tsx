@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/shared/navbar";
 import { getMe } from "@/service/getMe";
 
-const deshboardLayout = async({ children }: { children: React.ReactNode }) => {
+const LandlordLayout = async({ children }: { children: React.ReactNode }) => {
     const user = await getMe()
   return (
     <div>
@@ -11,4 +11,4 @@ const deshboardLayout = async({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default deshboardLayout;
+export default LandlordLayout;
