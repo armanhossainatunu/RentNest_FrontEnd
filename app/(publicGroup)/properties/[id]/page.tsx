@@ -12,12 +12,9 @@ interface PageProps {
 const PropertyDetailsPage = async ({ params }: PageProps) => {
   const { id } = await params;
 
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/properties/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${process.env.BACKEND_URL}/properties/${id}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     return (
@@ -43,7 +40,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
       ? (
           property.reviews.reduce(
             (sum: number, review: any) => sum + review.rating,
-            0
+            0,
           ) / property.reviews.length
         ).toFixed(1)
       : "0";
@@ -57,6 +54,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             src={property.thumbnail}
             alt={property.title}
             unoptimized
+            priority
             fill
             className="object-cover"
           />
@@ -69,22 +67,16 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
 
             <Badge
               variant={
-                property.status === "AVAILABLE"
-                  ? "default"
-                  : "destructive"
+                property.status === "AVAILABLE" ? "default" : "destructive"
               }
             >
               {property.status}
             </Badge>
           </div>
 
-          <h1 className="text-4xl font-bold">
-            {property.title}
-          </h1>
+          <h1 className="text-4xl font-bold">{property.title}</h1>
 
-          <p className="text-muted-foreground">
-            {property.description}
-          </p>
+          <p className="text-muted-foreground">{property.description}</p>
 
           <div className="space-y-3 text-sm">
             <div className="flex items-center gap-2">
@@ -103,10 +95,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Star
-                size={18}
-                className="fill-yellow-400 text-yellow-400"
-              />
+              <Star size={18} className="fill-yellow-400 text-yellow-400" />
               {averageRating} ({property.reviews.length} Reviews)
             </div>
           </div>
@@ -115,18 +104,14 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             <h2 className="text-3xl font-bold text-primary">
               ৳{property.price.toLocaleString()}
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Per Month
-            </p>
+            <p className="text-sm text-muted-foreground">Per Month</p>
           </div>
         </div>
       </div>
 
       {/* Reviews */}
       <div className="mt-12">
-        <h2 className="mb-6 text-2xl font-bold">
-          Customer Reviews
-        </h2>
+        <h2 className="mb-6 text-2xl font-bold">Customer Reviews</h2>
 
         <div className="space-y-4">
           {property.reviews.map((review: any) => (
@@ -142,9 +127,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
                   ))}
                 </div>
 
-                <p className="mt-3 text-muted-foreground">
-                  {review.comment}
-                </p>
+                <p className="mt-3 text-muted-foreground">{review.comment}</p>
 
                 <p className="mt-2 text-xs text-gray-500">
                   {new Date(review.createdAt).toLocaleDateString()}

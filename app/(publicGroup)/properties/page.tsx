@@ -33,6 +33,7 @@ export default async function Properties() {
               width={300}
               height={200}
               unoptimized
+              priority
               className="hover:scale-120  duration-500 ease-in-out"
               src={property.thumbnail}
               alt={property.title}

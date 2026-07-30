@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect } from "react";
 import { createPropertyAction } from "../_actions/createPropertyAction";
+import { toast } from "sonner";
 
 const initialState = {
   success: false,
@@ -16,7 +17,7 @@ export default function PropertyForm() {
 
   useEffect(() => {
     if (state.message) {
-      alert(state.message);
+      toast(state.message);
     }
   }, [state]);
 
