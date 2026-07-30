@@ -21,7 +21,7 @@ export default function PropertyForm() {
   }, [state]);
 
   return (
-    <form action={action} className="space-y-4 max-w-xl">
+    <form action={action} className="space-y-4 max-w-xl mx-auto mt-2">
       <input
         name="title"
         placeholder="Title"
@@ -73,7 +73,7 @@ export default function PropertyForm() {
       <button
         type="submit"
         disabled={pending}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="bg-primary text-white px-4 py-2 rounded"
       >
         {pending ? "Creating..." : "Create Property"}
       </button>

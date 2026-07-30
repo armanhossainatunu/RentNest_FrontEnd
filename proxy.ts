@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 const AUTH_ROUTES = ["/login", "/register"];
-const PUBLIC_ROUTES = ["/", "/properties", "/about", "/contact"];
+const PUBLIC_ROUTES = ["/", "/properties", "/about","/features", "/contact"];
 export function proxy(request: NextRequest) {
   const parthname = request.nextUrl.pathname;
-  console.log(request.url);
-  console.log(request);
-  console.log(request.nextUrl);
-  console.log(parthname);
+  // console.log(request.url);
+  // console.log(request);
+  // console.log(request.nextUrl);
+  // console.log(parthname);
 
   const accessToken = request.cookies.get("accessToken")?.value;
   const decodeToken = accessToken

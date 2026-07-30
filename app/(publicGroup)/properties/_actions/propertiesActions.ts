@@ -7,5 +7,6 @@ export async function getProperties() {
   });
 
   const properties = await res.json();
+  
   return properties;
 }
