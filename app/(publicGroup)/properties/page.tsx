@@ -1,62 +1,55 @@
-import { Button } from "@/components/ui/button";
 import { getProperties } from "./_actions/propertiesActions";
-import Link from "next/link";
-import Image from "next/image";
-import { MapPin } from "lucide-react";
+import PropertyFilter from "./_components/PropertyFilter";
+import PropertyCard from "./_components/PropertyCard";
 
+interface PageProps {
+  searchParams: Promise<{
+    location?: string;
 
-export default async function Properties() {
-  const properties = await getProperties();
-  if (!properties || !properties?.data.length) {
-    return (
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <h1 className="text-3xl font-bold flex items-center justify-center h-screen">
-            No Properties Found
-          </h1>
-        </div>
-      </div>
-    );
-  }
+    category?: string;
+
+    minPrice?: string;
+
+    maxPrice?: string;
+
+    amenities?: string;
+  }>;
+}
+
+export default async function Properties({ searchParams }: PageProps) {
+  const filters = await searchParams;
+
+  const response = await getProperties(filters);
+
+  const propertyList = response?.data ?? response ?? [];
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="text-3xl font-bold flex items-center justify-between">
-        {/* <h1 >Properties</h1> */}
-        <div>Properties</div>
-        <div>Properties</div>
-      </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {properties.data?.map((property: any) => (
-          <div key={property.id} className="border mt-2 overflow-hidden">
-            <Image
-              width={300}
-              height={200}
-              unoptimized
-              priority
-              className="hover:scale-120  duration-500 ease-in-out"
-              src={property.thumbnail}
-              alt={property.title}
-            />
-            <h2 className="text-lg font-bold px-2">{property.title}</h2>
-            <div className="flex justify-between px-2 py-1.5">
-              <p className="text-sm font-normal">${property.price}</p>
-              <div className="flex items-center gap-2 text-sm font-normal">
-                <MapPin size={18} />
-                {property.location}
-              </div>
+    <section className="mx-auto max-w-7xl px-5 py-10">
+      <h1 className="mb-8 text-3xl font-bold">All Properties</h1>
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+        {/* FILTER SIDEBAR */}
+
+        <aside className="lg:col-span-1">
+          <PropertyFilter />
+        </aside>
+
+        {/* PROPERTY LIST */}
+
+        <div className="lg:col-span-3">
+          {propertyList.length === 0 ? (
+            <div className="text-center text-xl font-semibold">
+              No Properties Found
             </div>
-            <div className="flex justify-between px-2 pb-3">
-              <Button className="bg-green-400 py-3 px-6 text-white rounded-xl">
-               <Link href={`/properties/${property.id}`}>Book Now</Link>
-              </Button>
-              <Button className="bg-green-400 py-3 px-6 text-white rounded-xl">
-                <Link href={`/properties/${property.id}`}>View Details</Link>
-              </Button>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {propertyList.map((property: any) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
             </div>
-          </div>
-        ))}
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

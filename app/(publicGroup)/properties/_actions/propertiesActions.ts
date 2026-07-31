@@ -1,12 +1,32 @@
-export async function getProperties() {
-  const res = await fetch("https://rent-nest-ten.vercel.app/api/properties", {
-    cache: "force-cache",
-    next: {
-      revalidate: 60 * 60 * 24,
+export async function getProperties(
+  searchParams: {
+    location?: string;
+    category?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    amenities?: string;
+  } = {},
+) {
+  const params = new URLSearchParams();
+
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (value) {
+      params.set(key, value);
     }
   });
 
-  const properties = await res.json();
-  
-  return properties;
+  const res = await fetch(
+    `https://rent-nest-ten.vercel.app/api/properties?${params.toString()}`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    return {
+      data: [],
+    };
+  }
+
+  return res.json();
 }
