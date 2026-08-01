@@ -53,7 +53,11 @@ export default function RentalRequestButton({
       setMessage("");
       setOpen(false);
     } catch (error: any) {
-      toast.error(error.message || "Something went wrong");
+      toast.error(
+        error.message === "Internal Server Error"
+          ? "This property is currently unavailable."
+          : error.message,
+      );
     } finally {
       setLoading(false);
     }
