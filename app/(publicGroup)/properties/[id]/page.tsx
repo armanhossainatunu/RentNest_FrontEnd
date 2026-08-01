@@ -2,6 +2,10 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, User, Eye, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
+import RentalRequestButton from "../_components/RentalRequestButton";
 
 interface PageProps {
   params: Promise<{
@@ -72,6 +76,11 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             >
               {property.status}
             </Badge>
+
+            {/* <Button asChild >
+              <Link href={`/properties/${property.id}`}>Booking Know</Link>
+            </Button> */}
+           
           </div>
 
           <h1 className="text-4xl font-bold">{property.title}</h1>
@@ -106,6 +115,9 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             </h2>
             <p className="text-sm text-muted-foreground">Per Month</p>
           </div>
+           <DropdownMenu>
+              <RentalRequestButton propertyId={property.id}  status={property.status}/>
+            </DropdownMenu>
         </div>
       </div>
 

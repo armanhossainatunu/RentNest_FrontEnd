@@ -20,6 +20,7 @@ export default function PropertyCard({ property }: { property: IProperty }) {
         <span className="absolute top-3 left-3 rounded-full bg-green-600 px-3 py-1 text-sm text-white">
           {property.category}
         </span>
+
         {/* Status */}
         <span
           className={`absolute right-3 top-3 rounded-full px-3 py-1 text-sm text-white ${
