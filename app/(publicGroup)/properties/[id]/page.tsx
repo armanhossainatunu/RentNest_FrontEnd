@@ -2,10 +2,10 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, User, Eye, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import RentalRequestButton from "../_components/RentalRequestButton";
+import { getMe } from "@/service/getMe";
+
 
 interface PageProps {
   params: Promise<{
@@ -14,6 +14,7 @@ interface PageProps {
 }
 
 const PropertyDetailsPage = async ({ params }: PageProps) => {
+  const user = await getMe();
   const { id } = await params;
 
   const res = await fetch(`${process.env.BACKEND_URL}/properties/${id}`, {
@@ -80,7 +81,6 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             {/* <Button asChild >
               <Link href={`/properties/${property.id}`}>Booking Know</Link>
             </Button> */}
-           
           </div>
 
           <h1 className="text-4xl font-bold">{property.title}</h1>
@@ -115,9 +115,13 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             </h2>
             <p className="text-sm text-muted-foreground">Per Month</p>
           </div>
-           <DropdownMenu>
-              <RentalRequestButton propertyId={property.id}  status={property.status}/>
-            </DropdownMenu>
+          <DropdownMenu>
+            <RentalRequestButton
+              propertyId={property.id}
+              status={property.status}
+              user={user?.data?.profile || null}
+            />
+          </DropdownMenu>
         </div>
       </div>
 

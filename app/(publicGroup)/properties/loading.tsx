@@ -3,8 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const PropertiesLoading = () => {
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="text-3xl font-bold flex items-center justify-between mb-6">
-        <Skeleton className="h-10 w-40" />
+      <div className="text-3xl font-bold flex items-center justify-between my-6">
         <Skeleton className="h-10 w-40" />
       </div>
 

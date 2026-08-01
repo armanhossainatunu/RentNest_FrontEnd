@@ -2,22 +2,23 @@ import { getProperties } from "./_actions/propertiesActions";
 import PropertyFilter from "./_components/PropertyFilter";
 import PropertyCard from "./_components/PropertyCard";
 import { IProperty } from "@/lib/types";
-
 interface PageProps {
   searchParams: Promise<{
     location?: string;
-
     category?: string;
-
     minPrice?: string;
-
     maxPrice?: string;
-
     amenities?: string;
   }>;
+
+  user?: {
+    id: string;
+    role: string;
+    email: string;
+  } | null;
 }
 
-export default async function Properties({ searchParams }: PageProps) {
+export default async function Properties({ searchParams  }: PageProps) {
   const filters = await searchParams;
 
   const response = await getProperties(filters);

@@ -4,7 +4,7 @@ import { MapPin, Bed, Bath, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IProperty } from "@/lib/types";
 
-export default function PropertyCard({ property }: { property: IProperty }) {
+export default function  PropertyCard({ property }: { property: IProperty }) {
   return (
     <div className="group overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:shadow-lg">
       {/* Image */}

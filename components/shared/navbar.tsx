@@ -45,7 +45,6 @@ const userMenuItems = [
   { label: "Settings", icon: Settings, href: "/settings" },
 ];
 
-
 type NavbarProps = {
   user: Iuser;
 };
@@ -58,6 +57,7 @@ export function Navbar({ user }: NavbarProps) {
   const [open, setOpen] = useState(false);
 
   const isLandlord = user?.data?.profile?.role === "LANDLORD";
+  const role = user?.data?.profile?.role;
 
   const handleLogout = async () => {
     await logout();
@@ -66,6 +66,15 @@ export function Navbar({ user }: NavbarProps) {
 
     router.push("/login");
   };
+
+  const dashboardLink =
+    role === "ADMIN"
+      ? "/admin_Dashboard"
+      : role === "LANDLORD"
+        ? "/Landlord_Dashboard"
+        : role === "TENANT"
+          ? "/Tenant_Dashboard"
+          : null;
 
   const NavLinks = () => (
     <>
@@ -92,6 +101,24 @@ export function Navbar({ user }: NavbarProps) {
           </Link>
         );
       })}
+      {/* DashBoard */}
+      {dashboardLink && (
+        <Link
+          href={dashboardLink}
+          onClick={() => setOpen(false)}
+          className={`
+      px-3 py-2 rounded-md text-sm font-medium
+
+      ${
+        pathname === dashboardLink
+          ? "bg-primary text-white"
+          : "text-muted-foreground hover:bg-accent"
+      }
+    `}
+        >
+          Dashboard
+        </Link>
+      )}
 
       {isLandlord && (
         <Link
