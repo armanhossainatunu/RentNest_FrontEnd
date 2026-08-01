@@ -1,36 +1,34 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { IProperty } from "@/lib/types";
 
-export default function PropertyFilter() {
+interface PropertyFilterProps {
+  propertyList: IProperty[];
+}
+
+export default function PropertyFilter({
+  propertyList,
+}: PropertyFilterProps) {
   const router = useRouter();
 
-  const params = useSearchParams();
-
   const [filter, setFilter] = useState({
-    location: params.get("location") || "",
-
-    category: params.get("category") || "",
-
-    minPrice: params.get("minPrice") || "",
-
-    maxPrice: params.get("maxPrice") || "",
-
-    amenities: params.get("amenities") || "",
+    location: "",
+    category: "",
+    minPrice: "",
+    maxPrice: "",
   });
 
-  const changeFilter = (
-    key: string,
+  // Get unique categories
+  const categories = [...new Set(propertyList.map((item) => item.category))];
 
-    value: string,
-  ) => {
-    setFilter({
-      ...filter,
-
+  const changeFilter = (key: string, value: string) => {
+    setFilter((prev) => ({
+      ...prev,
       [key]: value,
-    });
+    }));
   };
 
   const applyFilter = () => {
@@ -46,15 +44,7 @@ export default function PropertyFilter() {
   };
 
   return (
-    <div
-      className="
-rounded-xl
-border
-bg-white
-p-5
-space-y-5
-"
-    >
+    <div className="rounded-xl border bg-white p-5 space-y-5">
       <h2 className="text-xl font-bold">Advanced Filter</h2>
 
       <Input
@@ -70,13 +60,11 @@ space-y-5
       >
         <option value="">Property Type</option>
 
-        <option value="APARTMENT">Apartment</option>
-
-        <option value="HOUSE">House</option>
-
-        <option value="VILLA">Villa</option>
-
-        <option value="OFFICE">Office</option>
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
       </select>
 
       <Input
@@ -93,42 +81,9 @@ space-y-5
         onChange={(e) => changeFilter("maxPrice", e.target.value)}
       />
 
-      <div className="space-y-2">
-        <h3 className="font-semibold">Amenities</h3>
-
-        <label className="flex gap-2">
-          <input
-            type="checkbox"
-            checked={filter.amenities === "Parking"}
-            onChange={(e) =>
-              changeFilter("amenities", e.target.checked ? "Parking" : "")
-            }
-          />
-          Parking
-        </label>
-
-        <label className="flex gap-2">
-          <input
-            type="checkbox"
-            checked={filter.amenities === "Wifi"}
-            onChange={(e) =>
-              changeFilter("amenities", e.target.checked ? "Wifi" : "")
-            }
-          />
-          Wifi
-        </label>
-      </div>
-
       <button
         onClick={applyFilter}
-        className="
-w-full
-rounded-lg
-bg-green-600
-py-2
-text-white
-hover:bg-green-700
-"
+        className="w-full rounded-lg bg-green-600 py-2 text-white hover:bg-green-700"
       >
         Apply Filter
       </button>

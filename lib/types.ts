@@ -57,3 +57,27 @@ export type Iuser = {
     };
   };
 };
+
+
+// Property Type
+export type IProperty = {
+  id: string;
+  title: string;
+  thumbnail: string;
+  description: string;
+  price: number;
+  status: string;
+  authorId: string;
+  location: string;
+  category: string;
+  views: number;
+  createdAt: string;
+  updatedAt: string;
+  author: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  };
+  reviews: [];
+};

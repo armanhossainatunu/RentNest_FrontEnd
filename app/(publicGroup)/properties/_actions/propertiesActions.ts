@@ -30,3 +30,4 @@ export async function getProperties(
 
   return res.json();
 }
+

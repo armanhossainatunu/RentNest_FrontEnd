@@ -1,6 +1,7 @@
 import { getProperties } from "./_actions/propertiesActions";
 import PropertyFilter from "./_components/PropertyFilter";
 import PropertyCard from "./_components/PropertyCard";
+import { IProperty } from "@/lib/types";
 
 interface PageProps {
   searchParams: Promise<{
@@ -22,6 +23,7 @@ export default async function Properties({ searchParams }: PageProps) {
   const response = await getProperties(filters);
 
   const propertyList = response?.data ?? response ?? [];
+  // console.log("propertyList", propertyList);
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-10">
@@ -31,9 +33,10 @@ export default async function Properties({ searchParams }: PageProps) {
         {/* FILTER SIDEBAR */}
 
         <aside className="lg:col-span-1">
-          <PropertyFilter />
+          <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
+            <PropertyFilter propertyList={propertyList} />
+          </div>
         </aside>
-
         {/* PROPERTY LIST */}
 
         <div className="lg:col-span-3">
@@ -42,8 +45,8 @@ export default async function Properties({ searchParams }: PageProps) {
               No Properties Found
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {propertyList.map((property: any) => (
+            <div className="grid grid-cols-1  gap-6 md:grid-cols-3">
+              {propertyList.map((property: IProperty) => (
                 <PropertyCard key={property.id} property={property} />
               ))}
             </div>
