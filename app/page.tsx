@@ -14,7 +14,7 @@ type SearchParams = {
 
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
   const user = await getMe();
-  console.log(user, "user  page in home");
+  // console.log(user, "user  page in home");
   const searchParamsPromise = Promise.resolve(searchParams);
 
   return (

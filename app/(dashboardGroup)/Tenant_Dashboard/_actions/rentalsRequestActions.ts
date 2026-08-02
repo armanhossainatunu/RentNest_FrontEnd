@@ -15,7 +15,6 @@ export const getMyRentalRequests = async () => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-     
   });
 
   const data = await res.json();
