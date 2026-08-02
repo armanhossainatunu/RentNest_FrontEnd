@@ -1,4 +1,4 @@
-import { getMyRentalRequests } from "./_actions/rentalsRequest Actions";
+import { getMyRentalRequests } from "./_actions/rentalsRequestActions";
 import RentalRequestTable from "./_components/RentalRequestTable";
 
 export default async function MyRentalRequestsPage() {
