@@ -2,10 +2,21 @@
 
 import { cookies } from "next/headers";
 
-export const createPropertyAction = async (
-  _: unknown,
-  formData: FormData
-) => {
+const parseResponseData = async (res: Response) => {
+  const text = await res.text();
+
+  if (!text) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { message: text };
+  }
+};
+
+export const createPropertyAction = async (_: unknown, formData: FormData) => {
   const token = (await cookies()).get("accessToken")?.value;
   console.log(token);
 
@@ -18,24 +29,24 @@ export const createPropertyAction = async (
     category: formData.get("category"),
   };
 
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/landlord/properties`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
-      },
-      body: JSON.stringify(propertyData),
-    }
-  );
+  const res = await fetch(`${process.env.BACKEND_URL}/landlord/properties`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+    body: JSON.stringify(propertyData),
+  });
 
-  const data = await res.json();
+  const data = await parseResponseData(res);
 
   if (!res.ok) {
     return {
       success: false,
-      message: data.message || "Failed to create property",
+      message:
+        typeof data?.message === "string"
+          ? data.message
+          : "Failed to create property",
     };
   }
 

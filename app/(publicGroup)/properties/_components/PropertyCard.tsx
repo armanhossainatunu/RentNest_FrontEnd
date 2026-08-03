@@ -40,26 +40,6 @@ export default function  PropertyCard({ property }: { property: IProperty }) {
           {property.location}
         </div>
 
-        {/* Property Info */}
-        {/* <div className="flex justify-between border-y py-3 text-sm text-gray-600">
-
-          <div className="flex items-center gap-1">
-            <Bed size={16}/>
-            {property.bedrooms || 0} Beds
-          </div>
-
-          <div className="flex items-center gap-1">
-            <Bath size={16}/>
-            {property.bathrooms || 0} Baths
-          </div>
-
-          <div className="flex items-center gap-1">
-            <Square size={16}/>
-            {property.area || 0} sqft
-          </div>
-
-        </div> */}
-
         {/* Price */}
         <div className="flex items-center justify-between">
           <p className="text-xl font-bold text-green-600">৳ {property.price}</p>
