@@ -6,6 +6,8 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu";
 
 import RentalRequestButton from "../_components/RentalRequestButton";
 import { getMe } from "@/service/getMe";
+import DescriptionExpand from "../_components/DescriptionExpand";
+import ReviewForm from "../../Review/_components/ReviewForm";
 
 interface PageProps {
   params: Promise<{
@@ -36,6 +38,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
   const result = await res.json();
 
   const property = result?.data?.property;
+  const canReview = result?.data?.canReview;
 
   if (!property) {
     return (
@@ -87,7 +90,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
 
           <h1 className="text-4xl font-bold">{property.title}</h1>
 
-          <p className="text-muted-foreground">{property.description}</p>
+          <DescriptionExpand description={property.description} />
 
           <div className="space-y-3 text-sm">
             <div className="flex items-center gap-2">
@@ -133,7 +136,8 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
 
       <div className="mt-12">
         <h2 className="mb-6 text-2xl font-bold">Customer Reviews</h2>
-
+        {/* Review Form */}
+        {canReview && <ReviewForm propertyId={property.id} />}
         <div className="space-y-4">
           {property.reviews?.map((review: any) => (
             <Card key={review.id}>

@@ -33,7 +33,7 @@ export default function  PropertyCard({ property }: { property: IProperty }) {
 
       {/* Content */}
       <div className="space-y-3 p-5">
-        <h2 className="line-clamp-1 text-xl font-bold">{property.title}</h2>
+        <h2 className=" text-start text-xl font-bold line-clamp-1">{property.title}</h2>
 
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <MapPin size={16} />

@@ -56,13 +56,14 @@ export default function DeletePropertyButton({ propertyId }: Props) {
   return (
     <Button
       variant="destructive"
-      size="sm"
+      size="lg"
       disabled={isPending}
       onClick={handleDelete}
+      className="text-center"
     >
-      <Trash2 className="mr-2 h-4 w-4" />
+      <Trash2 className="mr-2 h-3 w-3" />
 
-      {isPending ? "Deleting..." : "Delete"}
+      {isPending ? "Deleting..." : ""}
     </Button>
   );
 }

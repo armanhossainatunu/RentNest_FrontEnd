@@ -12,7 +12,9 @@ const parseResponseData = async (res: Response) => {
   try {
     return JSON.parse(text);
   } catch {
-    return { message: text };
+    return {
+      message: text,
+    };
   }
 };
 
@@ -23,42 +25,52 @@ export const UpdatePropertyAction = async (
 ) => {
   const token = (await cookies()).get("accessToken")?.value;
 
+  if (!token) {
+    throw new Error("Please login first");
+  }
+
   if (!authorId) {
     throw new Error("Authentication required");
   }
-
+  // @ts-ignore 
   const normalizedPayload = {
     ...payload,
-    ...(typeof payload.category === "string" && payload.category
-      ? { category: payload.category.toUpperCase() }
+
+    price: payload.price !== undefined ? Number(payload.price) : undefined,
+
+    ...(typeof payload.category === "string"
+      ? {
+          category: payload.category.toUpperCase(),
+        }
       : {}),
-    ...(typeof payload.status === "string" && payload.status
-      ? { status: payload.status.toUpperCase() }
+
+    ...(typeof payload.status === "string"
+      ? {
+          status: payload.status.toUpperCase(),
+        }
       : {}),
   };
 
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/properties/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
-      },
-      body: JSON.stringify({ ...normalizedPayload, authorId }),
-      cache: "no-store",
+  const res = await fetch(`${process.env.BACKEND_URL}/properties/${id}`, {
+    method: "PUT",
+
+    headers: {
+      "Content-Type": "application/json",
+
+      Authorization: `Bearer ${token}`,
     },
-  );
+
+    body: JSON.stringify(normalizedPayload),
+
+    cache: "no-store",
+  });
 
   const data = await parseResponseData(res);
 
   if (!res.ok) {
-    const message =
-      typeof data?.message === "string"
-        ? data.message
-        : data?.error || "Property update failed";
+    console.log("UPDATE PROPERTY ERROR:", data);
 
-    throw new Error(message);
+    throw new Error(data?.message || "Property update failed");
   }
 
   return data;

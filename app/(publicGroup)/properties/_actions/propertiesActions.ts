@@ -18,10 +18,10 @@ export async function getProperties(
   const res = await fetch(
     `https://rent-nest-ten.vercel.app/api/properties?${params.toString()}`,
     {
-      cache: "force-cache",
-      next: {
-        revalidate: 60 * 60 * 24,
-      },
+      cache: "no-cache",
+      // next: {
+      //   revalidate: 60 * 60 * 24,
+      // },
     },
   );
 

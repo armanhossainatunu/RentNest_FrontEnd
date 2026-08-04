@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Table,
@@ -12,9 +13,8 @@ import {
 } from "@/components/ui/table";
 
 import { Badge } from "@/components/ui/badge";
-import { IRentalRequest } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { IRentalRequest } from "@/lib/types";
 
 interface Props {
   requests: IRentalRequest[];
@@ -35,6 +35,22 @@ const getStatusColor = (status: string) => {
 
     case "ACTIVE":
       return "bg-blue-600 text-white hover:bg-blue-700";
+
+    case "COMPLETED":
+      return "bg-purple-600 text-white hover:bg-purple-700";
+
+    default:
+      return "bg-gray-500 text-white";
+  }
+};
+
+const getPropertyStatusColor = (status: string) => {
+  switch (status) {
+    case "AVAILABLE":
+      return "bg-green-600 text-white";
+
+    case "UNAVAILABLE":
+      return "bg-red-600 text-white";
 
     default:
       return "bg-gray-500 text-white";
@@ -86,9 +102,11 @@ export default function RentalRequestTable({ requests }: Props) {
 
               <TableHead>Owner</TableHead>
 
+              <TableHead>Property Status</TableHead>
+
               <TableHead>Price</TableHead>
 
-              <TableHead>Request Status</TableHead>
+              <TableHead>Rental Status</TableHead>
 
               <TableHead>Payment Status</TableHead>
 
@@ -105,7 +123,7 @@ export default function RentalRequestTable({ requests }: Props) {
           <TableBody>
             {currentRequests.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} className="py-10 text-center">
+                <TableCell colSpan={11} className="py-10 text-center">
                   No Rental Requests Found
                 </TableCell>
               </TableRow>
@@ -120,11 +138,23 @@ export default function RentalRequestTable({ requests }: Props) {
 
                   <TableCell>{request.property.author.name}</TableCell>
 
+                  {/* Property Status */}
+
+                  <TableCell>
+                    <Badge
+                      className={getPropertyStatusColor(
+                        request.property.status,
+                      )}
+                    >
+                      {request.property.status}
+                    </Badge>
+                  </TableCell>
+
                   <TableCell>
                     ৳ {request.property.price.toLocaleString()}
                   </TableCell>
 
-                  {/* Rental Status */}
+                  {/* Rental Request Status */}
 
                   <TableCell>
                     <Badge className={getStatusColor(request.rentalstatus)}>
@@ -197,7 +227,7 @@ export default function RentalRequestTable({ requests }: Props) {
       {/* Pagination */}
 
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <Button
             size="sm"
             variant="outline"
