@@ -15,28 +15,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { IProperty } from "@/lib/types";
+import { IProperty, Iuser } from "@/lib/types";
 import { UpdatePropertyAction } from "../_actions/updateAction";
+import { useRouter } from "next/dist/client/components/navigation";
 
 interface Props {
   property: IProperty;
-  user: {
-    id?: string;
-    role?: string;
-    email?: string;
-    data?: {
-      profile?: {
-        id?: string;
-        role?: string;
-        email?: string;
-      };
-    };
-  } | null;
+  user: Iuser;
 }
 
 export default function UpdatePropertyDialog({ property, user }: Props) {
-  console.log("Property in UpdatePropertyDialog update:", property);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     title: property.title || "",
@@ -70,15 +60,10 @@ export default function UpdatePropertyDialog({ property, user }: Props) {
 
       setLoading(true);
 
-      const response = await UpdatePropertyAction(
-        property.id,
-        formData,
-        currentUser.id,
-      );
-
-      console.log("Updated Property:", response);
+      await UpdatePropertyAction(property.id, formData, currentUser.id);
 
       toast.success("Property updated successfully");
+      router.refresh();
     } catch (error: any) {
       toast.error(error.message);
     } finally {

@@ -5,7 +5,6 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
 import { LoginState } from "@/lib/types";
 
-
 export const loginAction = async (
   prevState: LoginState,
   formData: FormData,
@@ -47,9 +46,9 @@ export const loginAction = async (
     if (decodedToken.role === "ADMIN") {
       redirect("/admin_Dashboard");
     } else if (decodedToken.role === "LANDLORD") {
-      redirect("/Landlord_Dashboard");
+      redirect("/landlord-dashboard");
     } else if (decodedToken.role === "TENANT") {
-      redirect("/Tenant_Dashboard");
+      redirect("/tenant-dashboard");
     }
 
     // console.log(decodedToken, "decodedToken");

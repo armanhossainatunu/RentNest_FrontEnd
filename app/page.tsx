@@ -12,20 +12,25 @@ type SearchParams = {
   amenities?: string;
 };
 
-export default async function Home({ searchParams }: { searchParams: SearchParams }) {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const user = await getMe();
   // console.log(user, "user  page in home");
   const searchParamsPromise = Promise.resolve(searchParams);
 
   return (
     <div className="text-center font-bold ">
-      <div className="sticky top-0 z-10 " >
-      <Navbar user={user}  />
+      <div className="sticky top-0 z-10 ">
+        <Navbar user={user} />
       </div>
 
       <Suspense fallback={<PropertiesSkeleton />}>
-        <Properties searchParams={searchParamsPromise}  />
+        <Properties searchParams={searchParamsPromise} />
       </Suspense>
+  
     </div>
   );
 }

@@ -3,9 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, User, Eye, Star } from "lucide-react";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
+
 import RentalRequestButton from "../_components/RentalRequestButton";
 import { getMe } from "@/service/getMe";
-
 
 interface PageProps {
   params: Promise<{
@@ -14,12 +14,16 @@ interface PageProps {
 }
 
 const PropertyDetailsPage = async ({ params }: PageProps) => {
-  const user = await getMe();
   const { id } = await params;
 
-  const res = await fetch(`${process.env.BACKEND_URL}/properties/${id}`, {
-    cache: "no-store",
-  });
+  const [user, res] = await Promise.all([
+    getMe(),
+
+    fetch(`${process.env.BACKEND_URL}/properties/${id}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(10000),
+    }),
+  ]);
 
   if (!res.ok) {
     return (
@@ -30,6 +34,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
   }
 
   const result = await res.json();
+
   const property = result?.data?.property;
 
   if (!property) {
@@ -41,7 +46,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
   }
 
   const averageRating =
-    property.reviews.length > 0
+    property.reviews?.length > 0
       ? (
           property.reviews.reduce(
             (sum: number, review: any) => sum + review.rating,
@@ -51,21 +56,22 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
       : "0";
 
   return (
-    <div className="container mx-auto max-w-6xl py-10 px-4">
+    <div className="container mx-auto max-w-6xl px-4 py-10">
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Image */}
         <div className="relative h-[450px] overflow-hidden rounded-xl">
           <Image
             src={property.thumbnail}
             alt={property.title}
-            unoptimized
-            priority
             fill
+            priority
+            unoptimized
             className="object-cover"
           />
         </div>
 
         {/* Details */}
+
         <div className="space-y-6">
           <div className="flex items-center gap-3">
             <Badge>{property.category}</Badge>
@@ -77,10 +83,6 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
             >
               {property.status}
             </Badge>
-
-            {/* <Button asChild >
-              <Link href={`/properties/${property.id}`}>Booking Know</Link>
-            </Button> */}
           </div>
 
           <h1 className="text-4xl font-bold">{property.title}</h1>
@@ -95,7 +97,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
 
             <div className="flex items-center gap-2">
               <User size={18} />
-              {property.author.name}
+              {property.author?.name}
             </div>
 
             <div className="flex items-center gap-2">
@@ -105,16 +107,18 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
 
             <div className="flex items-center gap-2">
               <Star size={18} className="fill-yellow-400 text-yellow-400" />
-              {averageRating} ({property.reviews.length} Reviews)
+              {averageRating} ({property.reviews?.length || 0} Reviews)
             </div>
           </div>
 
           <div>
             <h2 className="text-3xl font-bold text-primary">
-              ৳{property.price.toLocaleString()}
+              ৳{property.price?.toLocaleString()}
             </h2>
+
             <p className="text-sm text-muted-foreground">Per Month</p>
           </div>
+
           <DropdownMenu>
             <RentalRequestButton
               propertyId={property.id}
@@ -126,15 +130,18 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
       </div>
 
       {/* Reviews */}
+
       <div className="mt-12">
         <h2 className="mb-6 text-2xl font-bold">Customer Reviews</h2>
 
         <div className="space-y-4">
-          {property.reviews.map((review: any) => (
+          {property.reviews?.map((review: any) => (
             <Card key={review.id}>
               <CardContent className="p-5">
                 <div className="flex items-center gap-2">
-                  {Array.from({ length: review.rating }).map((_, index) => (
+                  {Array.from({
+                    length: review.rating,
+                  }).map((_, index) => (
                     <Star
                       key={index}
                       size={16}

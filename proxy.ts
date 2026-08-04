@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 const AUTH_ROUTES = ["/login", "/register"];
-const PUBLIC_ROUTES = ["/", "/properties", "/about","/features", "/contact"];
+const PUBLIC_ROUTES = ["/", "/properties", "/about", "/features", "/contact"];
 export function proxy(request: NextRequest) {
   const parthname = request.nextUrl.pathname;
   // console.log(request.url);
@@ -22,9 +22,9 @@ export function proxy(request: NextRequest) {
 
   if (accessToken && AUTH_ROUTES.includes(parthname)) {
     if (userRole === "LANDLORD") {
-      return NextResponse.redirect(new URL("/Landlord_Dashboard", request.url));
+      return NextResponse.redirect(new URL("/landlord-dashboard", request.url));
     } else if (userRole === "TENANT") {
-      return NextResponse.redirect(new URL("/Tenant_Dashboard", request.url));
+      return NextResponse.redirect(new URL("/tenant-dashboard", request.url));
     } else if (userRole === "ADMIN") {
       return NextResponse.redirect(new URL("/admin_Dashboard", request.url));
     }
@@ -39,14 +39,14 @@ export function proxy(request: NextRequest) {
   if (!accessToken && !isPublicRoute && !isAUthRoute)
     return NextResponse.redirect(new URL("/login", request.url));
 
-if(parthname.startsWith("/admin_Dashboard") && userRole !== "ADMIN")
-  return NextResponse.redirect(new URL("/not-found", request.url));
-if(parthname.startsWith("/Landlord_Dashboard") && userRole !== "LANDLORD")
-  return NextResponse.redirect(new URL("/not-found", request.url));
-if(parthname.startsWith("/propertiesCreate") && userRole !== "LANDLORD")
-  return NextResponse.redirect(new URL("/not-found", request.url));
-if(parthname.startsWith("/Tenant_Dashboard") && userRole !== "TENANT")
-  return NextResponse.redirect(new URL("/not-found", request.url));
+  if (parthname.startsWith("/admin_Dashboard") && userRole !== "ADMIN")
+    return NextResponse.redirect(new URL("/not-found", request.url));
+  if (parthname.startsWith("/landlord-dashboard") && userRole !== "LANDLORD")
+    return NextResponse.redirect(new URL("/not-found", request.url));
+  if (parthname.startsWith("/propertiesCreate") && userRole !== "LANDLORD")
+    return NextResponse.redirect(new URL("/not-found", request.url));
+  if (parthname.startsWith("/tenant-dashboard") && userRole !== "TENANT")
+    return NextResponse.redirect(new URL("/not-found", request.url));
 
   //   return NextResponse.redirect(new URL("/", request.url));
   return NextResponse.next();
@@ -58,8 +58,8 @@ if(parthname.startsWith("/Tenant_Dashboard") && userRole !== "TENANT")
 export const config = {
   matcher: [
     // "/admin_Dashboard/:path*",
-    // "/Landlord_Dashboard/:path*",
-    // "/Tenant_Dashboard/:path*",
+    // "/landlord-dashboard/:path*",
+    // "/tenant-dashboard/:path*",
     "/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)",
   ],
 };

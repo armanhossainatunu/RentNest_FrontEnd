@@ -71,9 +71,9 @@ export function Navbar({ user }: NavbarProps) {
     role === "ADMIN"
       ? "/admin_Dashboard"
       : role === "LANDLORD"
-        ? "/Landlord_Dashboard"
+        ? "/landlord-dashboard"
         : role === "TENANT"
-          ? "/Tenant_Dashboard"
+          ? "/tenant-dashboard"
           : null;
 
   const NavLinks = () => (

@@ -33,15 +33,16 @@ export default function RentalRequest({ rentalRequestId }: Props) {
         size="sm"
         disabled={pending}
         onClick={() => handleUpdate("APPROVED")}
+        className="bg-green-600 text-white hover:bg-green-700"
       >
         {pending ? "Updating..." : "Approve"}
       </Button>
 
       <Button
         size="sm"
-        variant="destructive"
         disabled={pending}
         onClick={() => handleUpdate("REJECTED")}
+        className="bg-red-600 text-white hover:bg-red-700"
       >
         Reject
       </Button>

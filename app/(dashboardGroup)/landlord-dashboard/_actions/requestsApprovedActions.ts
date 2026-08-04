@@ -30,7 +30,7 @@ export const updateRentalRequestStatus = async (
     throw new Error(result.message || "Failed to update request");
   }
 
-  revalidatePath("/Landlord_Dashboard");
+  revalidatePath("/landlord-dashboard");
 
   return result;
 };

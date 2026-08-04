@@ -55,7 +55,7 @@ export default async function PaymentCancelPage({ searchParams }: PageProps) {
               <Link href="/">Return Home</Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/Tenant_Dashboard">View Requests</Link>
+              <Link href="/tenant-dashboard">View Requests</Link>
             </Button>
           </div>
         </CardContent>

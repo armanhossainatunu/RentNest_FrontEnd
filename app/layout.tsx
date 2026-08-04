@@ -4,9 +4,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 
-const inter = Inter({ 
-  subsets: ["latin"], 
-  variable: "--font-sans" 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 const geistSans = Geist({
@@ -39,12 +39,13 @@ export default function RootLayout({
         geistSans.variable,
         geistMono.variable,
         "font-sans",
-        inter.variable
+        inter.variable,
       )}
     >
       <body className="min-h-full flex flex-col">
         <Toaster position="top-right" richColors />
         {children}
+        
       </body>
     </html>
   );

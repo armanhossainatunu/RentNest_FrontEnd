@@ -53,7 +53,7 @@ export default async function PaymentSuccessPage({ searchParams }: PageProps) {
 
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild>
-              <Link href="/Tenant_Dashboard">Go to Dashboard</Link>
+              <Link href="/tenant-dashboard">Go to Dashboard</Link>
             </Button>
             <Button variant="outline" asChild>
               <Link href="/">Browse Properties</Link>

@@ -1,6 +1,5 @@
-import { getMyRentalRequests } from "@/app/(dashboardGroup)/Tenant_Dashboard/_actions/rentalsRequestActions";
-import RentalRequestTable from "@/app/(dashboardGroup)/Tenant_Dashboard/_components/RentalRequestTable";
-
+import { getMyRentalRequests } from "@/app/(dashboardGroup)/tenant-dashboard/_actions/rentalsRequestActions";
+import RentalRequestTable from "@/app/(dashboardGroup)/tenant-dashboard/_components/RentalRequestTable";
 
 export default async function TenantDashboard() {
   const response = await getMyRentalRequests();

@@ -10,7 +10,7 @@ export type LoginState = {
   };
 };
 
-// RegisterState type 
+// RegisterState type
 export type RegisterState = {
   success: boolean;
   statusCode: number;
@@ -57,7 +57,6 @@ export type Iuser = {
     };
   };
 };
-
 
 // Property Type
 export type IProperty = {
@@ -115,7 +114,6 @@ export type IProperty = {
 //                 "transactionId": "TXN_1784313944797_3068"
 //             }
 //         }
-    
 
 export type IRentalRequest = {
   id: string;
@@ -150,5 +148,6 @@ export type IRentalRequest = {
     amount: number;
     status: string;
     transactionId: string;
+    createdAt?: string;
   };
 };

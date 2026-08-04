@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/card";
 import PaymentButton from "../_components/PaymentButton";
 
-
-
 interface Props {
   params:
     | Promise<{
@@ -47,7 +45,7 @@ export default async function PaymentPage({ params }: Props) {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <ArrowRight className="h-4 w-4" />
             <Link
-              href="/Tenant_Dashboard"
+              href="/tenant-dashboard"
               className="font-medium text-primary hover:underline"
             >
               Return to dashboard
