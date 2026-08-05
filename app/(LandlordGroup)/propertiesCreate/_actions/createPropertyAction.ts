@@ -18,8 +18,6 @@ const parseResponseData = async (res: Response) => {
 
 export const createPropertyAction = async (_: unknown, formData: FormData) => {
   const token = (await cookies()).get("accessToken")?.value;
-  console.log(token);
-
   const propertyData = {
     title: formData.get("title"),
     thumbnail: formData.get("thumbnail"),

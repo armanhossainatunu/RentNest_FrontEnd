@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
 import {
   Table,
   TableBody,
@@ -17,6 +18,7 @@ import {
 
 import UpdatePropertyDialog from "@/app/(LandlordGroup)/propertiesCreate/_components/updateProperties";
 import DeletePropertyButton from "@/app/(LandlordGroup)/propertiesCreate/_components/DeletePropertyButton";
+import SearchInput from "./SearchInput";
 
 interface Props {
   properties: any[];
@@ -27,41 +29,80 @@ const ITEMS_PER_PAGE = 6;
 
 export default function MyPropertyTable({ properties, user }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
 
-  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
+  // Search Property Title
+  const filteredProperties = useMemo(() => {
+    const keyword = search.toLowerCase().trim();
+
+    if (!keyword) {
+      return properties;
+    }
+
+    return properties.filter((property) =>
+      property.title?.toLowerCase().includes(keyword),
+    );
+  }, [properties, search]);
+
+  // Reset page after search
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredProperties.length / ITEMS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  const currentProperties = properties.slice(
+  const currentProperties = filteredProperties.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE,
   );
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
+    <div className="space-y-5">
+      {/* Header */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-medium">My Properties</h1>
 
-        <Link
-          href="/propertiesCreate"
-          className="flex items-center gap-1 text-2xl font-medium"
-        >
-          <Plus size={20} />
-          Add Property
-        </Link>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <div className="w-[230px]">
+          <SearchInput
+            value={search}
+            onChange={setSearch}
+            placeholder="Search Property Title..."
+            />
+            </div>
+
+          <Link
+            href="/propertiesCreate"
+            className="flex items-center gap-1 text-lg font-medium"
+          >
+            <Plus size={20} />
+            Add Property
+          </Link>
+        </div>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Image</TableHead>
+
               <TableHead>Title</TableHead>
+
               <TableHead>Location</TableHead>
+
               <TableHead>Category</TableHead>
+
               <TableHead>Status</TableHead>
+
               <TableHead>Price</TableHead>
+
               <TableHead>Created Date</TableHead>
+
               <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -101,7 +142,7 @@ export default function MyPropertyTable({ properties, user }: Props) {
                     </span>
                   </TableCell>
 
-                  <TableCell>৳ {property.price.toLocaleString()}</TableCell>
+                  <TableCell>৳ {property.price?.toLocaleString()}</TableCell>
 
                   <TableCell>
                     {new Date(property.createdAt).toLocaleDateString("en-GB", {
@@ -113,7 +154,8 @@ export default function MyPropertyTable({ properties, user }: Props) {
 
                   <TableCell className="text-right">
                     <UpdatePropertyDialog property={property} user={user} />
-                     <DeletePropertyButton propertyId={property.id} />
+
+                    <DeletePropertyButton propertyId={property.id} />
                   </TableCell>
                 </TableRow>
               ))
@@ -127,6 +169,8 @@ export default function MyPropertyTable({ properties, user }: Props) {
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination */}
 
       {totalPages > 1 && (
         <div className="flex justify-center gap-2">

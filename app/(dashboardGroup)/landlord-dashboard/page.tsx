@@ -20,11 +20,6 @@ export default async function LandlordDashboardPage() {
   );
 
   const requests = response?.data || [];
-
-  // console.log("Landlord Email:", userEmail);
-
-  // console.log("My Properties:", myProperties);
-
   return (
     <section className="mx-auto max-w-7xl px-5 py-10 space-y-10">
       <h1 className="mb-8 text-3xl font-bold text-center">Landlord Dashboard</h1>

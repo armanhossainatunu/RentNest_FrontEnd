@@ -42,7 +42,6 @@ const getStatusColor = (status: string) => {
 };
 
 export default function RentalRequestTable({ requests }: Props) {
-
   const [currentPage, setCurrentPage] = useState(1);
 
   // Latest created request first
@@ -72,6 +71,8 @@ export default function RentalRequestTable({ requests }: Props) {
 
               <TableHead>Property</TableHead>
 
+              <TableHead>Message</TableHead>
+
               <TableHead>Price</TableHead>
 
               <TableHead>Created Date</TableHead>
@@ -90,11 +91,12 @@ export default function RentalRequestTable({ requests }: Props) {
                     {request.tenant?.name || "N/A"}
                   </TableCell>
 
-                  <TableCell>{request.tenant?.email || "N/A"}</TableCell>
+                  <TableCell>{request.tenant?.email}</TableCell>
 
-                  <TableCell>{request.property?.title || "N/A"}</TableCell>
+                  <TableCell>{request.property?.title}</TableCell>
+                  <TableCell>{request?.message}</TableCell>
 
-                  <TableCell>৳ {request.property?.price || 0}</TableCell>
+                  <TableCell>৳ {request.property?.price}</TableCell>
 
                   <TableCell>
                     {request.createdAt

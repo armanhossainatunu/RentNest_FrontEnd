@@ -8,7 +8,6 @@ export const updateRentalRequestStatus = async (
   rentalstatus: "APPROVED" | "REJECTED",
 ) => {
   const token = (await cookies()).get("accessToken")?.value;
-  console.log(token);
   if (!token) {
     throw new Error("Unauthorized");
   }
@@ -17,6 +16,7 @@ export const updateRentalRequestStatus = async (
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       rentalstatus,

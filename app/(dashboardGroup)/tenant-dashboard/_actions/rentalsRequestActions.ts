@@ -5,9 +5,6 @@ import { cookies } from "next/headers";
 export const getMyRentalRequests = async () => {
   const token = (await cookies()).get("accessToken")?.value;
 
-  console.log(token);
-
-
   if (!token) {
     return {
       success: true,

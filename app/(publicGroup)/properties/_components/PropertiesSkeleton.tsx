@@ -3,6 +3,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 const PropertiesSkeleton = () => {
   return (
     <div className="max-w-7xl mx-auto">
+      <div className="mt-10 flex justify-center items-center">
+        <Skeleton className="h-10 w-1/3" />
+      </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mt-10">
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index} className="border rounded-lg overflow-hidden">

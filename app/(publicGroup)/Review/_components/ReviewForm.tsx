@@ -34,14 +34,22 @@ export default function ReviewForm({ propertyId }: Props) {
           comment,
         });
 
-        toast.success(res.message);
+        toast.success(res.message || "Review submitted successfully");
 
         setComment("");
         setRating(5);
 
         router.refresh();
       } catch (error: any) {
-        toast.error(error.message);
+        const message = error?.message || "Failed to submit review";
+
+        // Duplicate review handling
+        if (message.includes("already reviewed")) {
+          toast.error("You have already reviewed this property.");
+          return;
+        }
+
+        toast.error(message);
       }
     });
   };

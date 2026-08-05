@@ -45,6 +45,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
   const result = await res.json();
 
   const property = result?.data?.property;
+ 
   const completedRentalRequest = reantalRequest?.data?.find(
     (request: any) =>
       request.propertyId === property.id &&
@@ -145,12 +146,12 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
       </div>
 
       {/* Reviews */}
-
       <div className="mt-12">
         <h2 className="mb-6 text-2xl font-bold">Customer Reviews</h2>
         {/* Review Form */}
         {canReview && <ReviewForm propertyId={property.id} />}
-        <div className="space-y-4">
+        <div className="space-y-4 mt-5">
+          {/* Reviews */}
           {property.reviews?.map((review: any) => (
             <Card key={review.id}>
               <CardContent className="p-5">
