@@ -8,7 +8,7 @@ export const updateRentalRequestStatus = async (
   rentalstatus: "APPROVED" | "REJECTED",
 ) => {
   const token = (await cookies()).get("accessToken")?.value;
-
+  console.log(token);
   if (!token) {
     throw new Error("Unauthorized");
   }
@@ -16,7 +16,6 @@ export const updateRentalRequestStatus = async (
   const res = await fetch(`${process.env.BACKEND_URL}/requests/${rentalId}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({

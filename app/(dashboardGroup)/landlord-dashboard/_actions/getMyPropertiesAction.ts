@@ -7,15 +7,12 @@ export async function getMyProperties() {
 
   const token = cookieStore.get("token")?.value;
 
-  const response = await fetch(
-    `${process.env.BACKEND_URL}/landlord/requests`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    }
-  );
-console.log("getMyProperties response:", response);
+  const response = await fetch(`${process.env.BACKEND_URL}/landlord/requests`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
   return response.json();
 }

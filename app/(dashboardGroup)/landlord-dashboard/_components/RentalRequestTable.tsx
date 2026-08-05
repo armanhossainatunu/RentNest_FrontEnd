@@ -42,6 +42,7 @@ const getStatusColor = (status: string) => {
 };
 
 export default function RentalRequestTable({ requests }: Props) {
+
   const [currentPage, setCurrentPage] = useState(1);
 
   // Latest created request first

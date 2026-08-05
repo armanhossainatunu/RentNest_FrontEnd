@@ -8,6 +8,7 @@ import RentalRequestButton from "../_components/RentalRequestButton";
 import { getMe } from "@/service/getMe";
 import DescriptionExpand from "../_components/DescriptionExpand";
 import ReviewForm from "../../Review/_components/ReviewForm";
+import { getMyRentalRequests } from "@/app/(dashboardGroup)/tenant-dashboard/_actions/rentalsRequestActions";
 
 interface PageProps {
   params: Promise<{
@@ -16,6 +17,12 @@ interface PageProps {
 }
 
 const PropertyDetailsPage = async ({ params }: PageProps) => {
+  const reantalRequest = await getMyRentalRequests();
+  console.log(
+    "reantalRequest details page",
+    reantalRequest?.data?.[0]?.rentalstatus,
+  );
+
   const { id } = await params;
 
   const [user, res] = await Promise.all([
@@ -38,8 +45,13 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
   const result = await res.json();
 
   const property = result?.data?.property;
-  const canReview = result?.data?.canReview;
+  const completedRentalRequest = reantalRequest?.data?.find(
+    (request: any) =>
+      request.propertyId === property.id &&
+      request.rentalstatus === "COMPLETED",
+  );
 
+  const canReview = !!completedRentalRequest;
   if (!property) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -62,7 +74,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
     <div className="container mx-auto max-w-6xl px-4 py-10">
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Image */}
-        <div className="relative h-[450px] overflow-hidden rounded-xl">
+        <div className="relative `h-[450px]` overflow-hidden rounded-xl">
           <Image
             src={property.thumbnail}
             alt={property.title}

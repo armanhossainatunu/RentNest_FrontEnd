@@ -1,119 +1,88 @@
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Home, ShieldCheck, Users, Search } from "lucide-react";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-
-export default function ContactPage() {
+const AboutPage = () => {
   return (
-    <section className="container mx-auto max-w-6xl px-5 py-16">
-      {/* Hero */}
+    <main className="min-h-screen bg-background">
+      {/* Hero Section */}
 
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold md:text-5xl">Contact RentNest</h1>
+      <section className="py-20 px-5 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-5">About RentNest</h1>
 
-        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-          Have questions about renting, listing your property, or need support?
-          Our team is ready to help you.
+        <p className="max-w-3xl mx-auto text-muted-foreground text-lg">
+          RentNest is a modern rental marketplace that connects property owners
+          and tenants easily. Our mission is to make finding and renting
+          properties simple, secure, and reliable.
         </p>
-      </div>
+      </section>
 
-      <div className="grid gap-10 lg:grid-cols-3">
-        {/* Contact Info */}
+      {/* About Content */}
 
-        <div className="space-y-5">
-          <Card>
-            <CardContent className="flex items-center gap-4 p-6">
-              <Mail className="text-primary" />
+      <section className="max-w-6xl mx-auto px-5 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 className="text-3xl font-bold mb-4">Find Your Perfect Home</h2>
 
-              <div>
-                <h3 className="font-semibold">Email</h3>
-
-                <p className="text-sm text-muted-foreground">
-                  support@rentnest.com
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="flex items-center gap-4 p-6">
-              <Phone className="text-primary" />
-
-              <div>
-                <h3 className="font-semibold">Phone</h3>
-
-                <p className="text-sm text-muted-foreground">
-                  +880 1700-000000
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="flex items-center gap-4 p-6">
-              <MapPin className="text-primary" />
-
-              <div>
-                <h3 className="font-semibold">Address</h3>
-
-                <p className="text-sm text-muted-foreground">
-                  Dhaka, Bangladesh
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="flex items-center gap-4 p-6">
-              <Clock className="text-primary" />
-
-              <div>
-                <h3 className="font-semibold">Working Hours</h3>
-
-                <p className="text-sm text-muted-foreground">
-                  Sat - Thu (9:00 AM - 6:00 PM)
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <p className="text-muted-foreground leading-7">
+            Whether you are looking for a comfortable apartment, a luxury villa,
+            or a commercial space, RentNest helps you discover the right
+            property according to your needs. Property owners can easily publish
+            their properties and connect with potential tenants.
+          </p>
         </div>
 
-        {/* Contact Form */}
+        <div className="bg-muted rounded-xl p-8">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="text-center">
+              <Home className="mx-auto mb-3 h-8 w-8" />
 
-        <Card className="lg:col-span-2">
-          <CardContent className="p-8">
-            <h2 className="mb-6 text-2xl font-bold">Send us a message</h2>
+              <h3 className="font-bold">Properties</h3>
 
-            <form className="space-y-5">
-              <div className="grid gap-5 md:grid-cols-2">
-                <Input placeholder="Your Name" />
+              <p className="text-sm text-muted-foreground">
+                Thousands of listings
+              </p>
+            </div>
 
-                <Input placeholder="Email Address" type="email" />
-              </div>
+            <div className="text-center">
+              <Users className="mx-auto mb-3 h-8 w-8" />
 
-              <Input placeholder="Subject" />
+              <h3 className="font-bold">Community</h3>
 
-              <Textarea placeholder="Write your message..." rows={6} />
+              <p className="text-sm text-muted-foreground">Trusted users</p>
+            </div>
 
-              <Button className="w-full md:w-auto">Send Message</Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+            <div className="text-center">
+              <ShieldCheck className="mx-auto mb-3 h-8 w-8" />
 
-      {/* Bottom CTA */}
+              <h3 className="font-bold">Secure</h3>
 
-      <div className="mt-16 rounded-xl bg-primary p-8 text-center text-primary-foreground">
-        <h2 className="text-3xl font-bold">
-          Find your perfect home with RentNest
-        </h2>
+              <p className="text-sm text-muted-foreground">Safe transactions</p>
+            </div>
 
-        <p className="mt-3">
-          Trusted rental marketplace connecting tenants and property owners.
-        </p>
-      </div>
-    </section>
+            <div className="text-center">
+              <Search className="mx-auto mb-3 h-8 w-8" />
+
+              <h3 className="font-bold">Easy Search</h3>
+
+              <p className="text-sm text-muted-foreground">Find faster</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Section */}
+
+      <section className="max-w-6xl mx-auto px-5 py-20">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-5">Our Mission</h2>
+
+          <p className="max-w-3xl mx-auto text-muted-foreground">
+            We aim to create a trusted rental ecosystem where landlords can
+            manage their properties easily and tenants can find their ideal
+            homes without hassle.
+          </p>
+        </div>
+      </section>
+    </main>
   );
-}
+};
+
+export default AboutPage;

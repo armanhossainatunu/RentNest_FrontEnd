@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IRentalRequest } from "@/lib/types";
 
+
 interface Props {
   requests: IRentalRequest[];
 }
@@ -78,7 +79,7 @@ const getPaymentColor = (status: string) => {
 
 export default function RentalRequestTable({ requests }: Props) {
   const router = useRouter();
-
+ 
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(requests.length / ITEMS_PER_PAGE);
@@ -223,9 +224,7 @@ export default function RentalRequestTable({ requests }: Props) {
           </TableBody>
         </Table>
       </div>
-
       {/* Pagination */}
-
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
           <Button

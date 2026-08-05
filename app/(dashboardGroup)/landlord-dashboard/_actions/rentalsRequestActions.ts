@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 export const getMyRentalRequests = async () => {
   const token = (await cookies()).get("accessToken")?.value;
 
+
   if (!token) {
     throw new Error("Unauthorized");
   }

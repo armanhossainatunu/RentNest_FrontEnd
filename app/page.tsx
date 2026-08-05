@@ -3,6 +3,7 @@ import { getMe } from "@/service/getMe";
 import Properties from "./(publicGroup)/properties/page";
 import { Suspense } from "react";
 import PropertiesSkeleton from "./(publicGroup)/properties/_components/PropertiesSkeleton";
+import Footer from "@/components/shared/footer";
 
 type SearchParams = {
   location?: string;
@@ -30,7 +31,7 @@ export default async function Home({
       <Suspense fallback={<PropertiesSkeleton />}>
         <Properties searchParams={searchParamsPromise} />
       </Suspense>
-  
+      <Footer />
     </div>
   );
 }
