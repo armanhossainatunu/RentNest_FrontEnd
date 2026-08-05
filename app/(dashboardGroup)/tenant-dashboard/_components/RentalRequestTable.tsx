@@ -16,7 +16,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IRentalRequest } from "@/lib/types";
 
-
 interface Props {
   requests: IRentalRequest[];
 }
@@ -79,7 +78,7 @@ const getPaymentColor = (status: string) => {
 
 export default function RentalRequestTable({ requests }: Props) {
   const router = useRouter();
- 
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(requests.length / ITEMS_PER_PAGE);
@@ -93,6 +92,7 @@ export default function RentalRequestTable({ requests }: Props) {
 
   return (
     <div className="space-y-5">
+      <h1 className="mb-6 text-2xl font-medium">My Rental Requests</h1>
       <div className="overflow-x-auto rounded-lg border">
         <Table>
           <TableHeader>

@@ -3,12 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const PropertiesSkeleton = () => {
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="text-3xl font-bold flex items-center justify-between mb-6">
-        <Skeleton className="h-10 w-40" />
-        <Skeleton className="h-10 w-40" />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mt-10">
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index} className="border rounded-lg overflow-hidden">
             {/* Image Skeleton */}

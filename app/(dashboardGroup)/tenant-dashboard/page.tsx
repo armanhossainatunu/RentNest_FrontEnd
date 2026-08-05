@@ -8,8 +8,7 @@ export default async function MyRentalRequestsPage() {
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-10">
-      <h1 className="mb-6 text-3xl font-bold">My Rental Requests</h1>
-
+      <h1 className="mb-6 text-3xl font-bold text-center">Tenant Dashboard</h1>
       {requests.length === 0 ? (
         <div className="text-center text-lg">No rental requests found.</div>
       ) : (
