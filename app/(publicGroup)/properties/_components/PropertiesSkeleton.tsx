@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const PropertiesSkeleton = () => {
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto mb-10">
       <div className="mt-10 flex justify-center items-center">
         <Skeleton className="h-10 w-1/3" />
       </div>

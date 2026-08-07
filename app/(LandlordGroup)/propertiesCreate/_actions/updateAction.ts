@@ -68,7 +68,6 @@ export const UpdatePropertyAction = async (
   const data = await parseResponseData(res);
 
   if (!res.ok) {
-    console.log("UPDATE PROPERTY ERROR:", data);
 
     throw new Error(data?.message || "Property update failed");
   }

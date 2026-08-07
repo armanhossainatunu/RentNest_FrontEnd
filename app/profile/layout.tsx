@@ -2,15 +2,19 @@ import Footer from "@/components/shared/footer";
 import { Navbar } from "@/components/shared/navbar";
 import { getMe } from "@/service/getMe";
 
-const AboutLayout = async({ children }: { children: React.ReactNode }) => {
-    const user = await getMe()
+const ProfileLayout = async ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const user = await getMe();
   return (
     <div>
       <Navbar user={user} />
       <div className="max-w-7xl mx-auto ">{children}</div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
 
-export default AboutLayout;
+export default ProfileLayout;

@@ -22,7 +22,7 @@ interface Props {
 export default async function PaymentPage({ params }: Props) {
   const resolvedParams = await params;
   const id = resolvedParams?.id?.trim() || "";
-  console.log("PaymentPage id:", id);
+  // console.log("PaymentPage id:", id);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-2xl items-center justify-center px-5 py-16">

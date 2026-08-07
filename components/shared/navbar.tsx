@@ -40,8 +40,8 @@ const navItems = [
 
 const userMenuItems = [
   { label: "Profile", icon: User, href: "/profile" },
-  { label: "Billing", icon: CreditCard, href: "/billing" },
-  { label: "Settings", icon: Settings, href: "/settings" },
+  // { label: "Billing", icon: CreditCard, href: "/billing" },
+  // { label: "Settings", icon: Settings, href: "/settings" },
 ];
 
 type NavbarProps = {

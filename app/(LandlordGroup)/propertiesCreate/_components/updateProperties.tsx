@@ -42,7 +42,7 @@ export default function UpdatePropertyDialog({ property, user }: Props) {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    console.log("Form Data:", formData);
+    
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,

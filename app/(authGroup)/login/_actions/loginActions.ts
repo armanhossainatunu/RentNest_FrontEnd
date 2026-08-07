@@ -39,7 +39,7 @@ export const loginAction = async (
       maxAge: 60 * 60 * 24 * 7,
       sameSite: "lax",
     });
-    // redirect("/Admin_Dashboard");
+    // redirect("/admin_Dashboard");
     const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
     // console.log(decodedToken, "decodedToken");
 

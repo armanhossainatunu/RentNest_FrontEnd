@@ -18,10 +18,6 @@ interface PageProps {
 
 const PropertyDetailsPage = async ({ params }: PageProps) => {
   const reantalRequest = await getMyRentalRequests();
-  console.log(
-    "reantalRequest details page",
-    reantalRequest?.data?.[0]?.rentalstatus,
-  );
 
   const { id } = await params;
 
@@ -45,7 +41,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
   const result = await res.json();
 
   const property = result?.data?.property;
- 
+//  console.log(property, " property details");
   const completedRentalRequest = reantalRequest?.data?.find(
     (request: any) =>
       request.propertyId === property.id &&
@@ -152,6 +148,7 @@ const PropertyDetailsPage = async ({ params }: PageProps) => {
         {canReview && <ReviewForm propertyId={property.id} />}
         <div className="space-y-4 mt-5">
           {/* Reviews */}
+
           {property.reviews?.map((review: any) => (
             <Card key={review.id}>
               <CardContent className="p-5">

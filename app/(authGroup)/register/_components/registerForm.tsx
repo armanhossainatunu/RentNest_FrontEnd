@@ -27,7 +27,6 @@ const RegisterForm = () => {
 
     if (state.success) {
       toast.success(state.message);
-
       router.push("/auth/login");
     } else {
       toast.error(state.error);
@@ -35,9 +34,14 @@ const RegisterForm = () => {
   }, [state, router]);
 
   return (
-    <form action={action} className="space-y-4 w-sm">
-      <Card className="p-5 space-y-4 rounded-sm">
+    <form
+      action={action}
+      className="w-sm space-y-4"
+      encType="multipart/form-data"
+    >
+      <Card className="space-y-4 rounded-sm p-5">
         <h1 className="text-center text-3xl font-bold">Register</h1>
+
         <Input name="name" placeholder="Enter your name" required />
 
         <Input
@@ -59,6 +63,13 @@ const RegisterForm = () => {
           placeholder="Enter your role (TENANT/LANDLORD)"
           required
         />
+
+        {/* Profile Image */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Profile Image</label>
+
+          <Input name="profilePhoto" type="file" accept="image/*" />
+        </div>
 
         <Button type="submit" disabled={loading}>
           {loading ? "Loading..." : "Register"}
