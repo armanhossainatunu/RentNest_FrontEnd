@@ -5,6 +5,7 @@ export default async function RentalRequestPage() {
   const result = await getAllRentalRequests();
 
   const rentals = result?.data || [];
+  console.log(rentals[3]," rentals admin dashboard");
 
   return (
     <section className="p-6">

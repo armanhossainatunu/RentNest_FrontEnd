@@ -16,7 +16,7 @@ const LoginForm = () => {
       toast.success(state.message);
     
     } else {
-      toast.error(state.error);
+      toast.error("Login failed");
     }
   }, [state]);
 

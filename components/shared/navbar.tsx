@@ -147,7 +147,7 @@ export function Navbar({ user }: NavbarProps) {
           {/* Logo */}
 
           <Link href="/" className="text-xl font-bold">
-            RentNest
+            Rent<span className="text-primary">Nest</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -158,11 +158,11 @@ export function Navbar({ user }: NavbarProps) {
 
           {/* Right Side */}
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 ">
             {user?.success ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button>
+                  <button className="cursor-pointer">
                     <CircleUserRound />
                   </button>
                 </DropdownMenuTrigger>
@@ -188,7 +188,7 @@ export function Navbar({ user }: NavbarProps) {
 
                       return (
                         <DropdownMenuItem key={item.href} asChild>
-                          <Link href={item.href} className="flex gap-2">
+                          <Link href={item.href} className="flex gap-2 cursor-pointer">
                             <Icon className="h-4 w-4" />
 
                             {item.label}

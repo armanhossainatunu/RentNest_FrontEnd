@@ -1,19 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
-export default function AdminRentalTable({ rentals, users }: any) {
+export default function AdminRentalTable({ rentals }: any) {
   const [statusFilter, setStatusFilter] = useState("ALL");
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const ITEMS_PER_PAGE = 10;
+
+  // Filter
   const filteredRentals =
     statusFilter === "ALL"
       ? rentals
       : rentals.filter((item: any) => item.rentalstatus === statusFilter);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [statusFilter]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredRentals.length / ITEMS_PER_PAGE);
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const currentRentals = filteredRentals.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE,
+  );
+
   return (
     <div className="space-y-5">
       {/* Status Filter */}
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         {["ALL", "PENDING", "APPROVED", "ACTIVE", "REJECTED"].map((status) => (
           <button
             key={status}
@@ -29,87 +48,82 @@ export default function AdminRentalTable({ rentals, users }: any) {
         ))}
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full border">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-3">Property</th>
-              <th>Tenant</th>
-              <th>Landlord</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>Payment</th>
+      {/* Table */}
+      <div className="overflow-x-auto rounded-lg border">
+        <table className="w-full">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 text-left">Property</th>
+
+              <th className="p-3 text-left">Tenant</th>
+
+              <th className="p-3 text-left">Landlord</th>
+
+              <th className="p-3 text-left">Price</th>
+
+              <th className="p-3 text-left">Status</th>
             </tr>
           </thead>
 
           <tbody>
-            {filteredRentals.length > 0 ? (
-              filteredRentals.map((item: any) => {
-                const tenant = users?.find(
-                  (user: any) => user.id === item.tenantId,
-                );
+            {currentRentals.length > 0 ? (
+              currentRentals.map((item: any) => (
+                <tr key={item.id} className="border-t hover:bg-gray-50">
+                  {/* Property */}
+                  <td className="p-3">
+                    <p className="font-medium">{item.property?.title}</p>
 
-                return (
-                  <tr key={item.id} className="border-t">
-                    <td className="p-3">{item.property.title}</td>
+                    <p className="text-sm text-gray-500">
+                      {item.property?.location}
+                    </p>
+                  </td>
 
-                    <td>
-                      {tenant ? (
-                        <div>
-                          <p className="font-medium">{tenant.name}</p>
+                  {/* Tenant */}
+                  <td className="p-3">
+                    {item.tenant ? (
+                      <>
+                        <p className="font-medium">{item.tenant.name}</p>
 
-                          <p className="text-sm text-gray-500">
-                            {tenant.email}
-                          </p>
-                        </div>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
+                        <p className="text-sm text-gray-500">
+                          {item.tenant.email}
+                        </p>
+                      </>
+                    ) : (
+                      "N/A"
+                    )}
+                  </td>
 
-                    <td>
-                      <p>{item.property.author.name}</p>
+                  {/* Landlord */}
+                  <td className="p-3">
+                    <p>{item.property?.author?.name}</p>
 
-                      <p className="text-sm text-gray-500">
-                        {item.property.author.email}
-                      </p>
-                    </td>
+                    <p className="text-sm text-gray-500">
+                      {item.property?.author?.email}
+                    </p>
+                  </td>
 
-                    <td>৳ {item.property.price}</td>
+                  {/* Price */}
+                  <td>৳ {item.property?.price}</td>
 
-                    <td>
-                      <span
-                        className={
-                          item.rentalstatus === "ACTIVE"
-                            ? "text-green-600"
-                            : item.rentalstatus === "REJECTED"
-                              ? "text-red-600"
-                              : "text-orange-600"
-                        }
-                      >
-                        {item.rentalstatus}
-                      </span>
-                    </td>
-
-                    <td>
-                      {item.payment ? (
-                        <div>
-                          <p>{item.payment.status}</p>
-
-                          <p className="text-sm">
-                            {item.payment.transactionId}
-                          </p>
-                        </div>
-                      ) : (
-                        "Unpaid"
-                      )}
-                    </td>
-                  </tr>
-                );
-              })
+                  {/* Status */}
+                  <td>
+                    <span
+                      className={
+                        item.rentalstatus === "ACTIVE"
+                          ? "text-green-600"
+                          : item.rentalstatus === "REJECTED"
+                            ? "text-red-600"
+                            : "text-orange-600"
+                      }
+                    >
+                      {item.rentalstatus}
+                    </span>
+                  </td>
+                </tr>
+              ))
             ) : (
               <tr>
-                <td colSpan={6} className="p-5 text-center">
+                <td colSpan={5} className="p-5 text-center text-gray-500">
                   No rental request found
                 </td>
               </tr>
@@ -117,6 +131,40 @@ export default function AdminRentalTable({ rentals, users }: any) {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex flex-wrap justify-center gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            Previous
+          </Button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Button
+              key={page}
+              size="sm"
+              variant={currentPage === page ? "default" : "outline"}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </Button>
+          ))}
+
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

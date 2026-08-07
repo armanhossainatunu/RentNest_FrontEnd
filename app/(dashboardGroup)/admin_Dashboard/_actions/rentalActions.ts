@@ -10,6 +10,7 @@ export async function getAllRentalRequests() {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
     cache: "no-store",
   });

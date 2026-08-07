@@ -127,7 +127,7 @@ export default function AdminPropertiesTable({
           </tbody>
         </table>
       </div>
-
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-center gap-2">
           <Button
