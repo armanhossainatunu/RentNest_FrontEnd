@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RentNest Frontend
 
-## Getting Started
+RentNest is a modern rental marketplace frontend built with **Next.js 16**, **React 19**, **Tailwind CSS 4**, and a shadcn-inspired UI component system.
 
-First, run the development server:
+The app supports public property listings, tenant and landlord dashboards, admin management features, authentication, payments, and review workflows.
+
+## Key Features
+
+- Authentication pages for login and registration
+- Dashboard support for tenants, landlords, and admins
+- Property listing pages with detail views
+- Payment flow including success/cancel routes
+- Admin tables for users, rentals, payments, and properties
+- Recharts-based revenue charts and analytics
+- Mobile-friendly responsive UI with shadcn and Radix components
+
+## Project Stack
+
+- Next.js 16.2.10
+- React 19.2.4
+- TypeScript
+- Tailwind CSS 4
+- Radix UI
+- Recharts
+- Axios
+- Sonner notifications
+- Theme support via `next-themes`
+
+## Folder Structure
+
+- `app/` - Next.js App Router pages and layouts
+- `components/` - shared UI components and design system primitives
+- `hooks/` - custom React hooks
+- `lib/` - application interfaces, types, and utility functions
+- `service/` - API helpers for authentication and token refresh
+- `public/` - static assets
+
+## Setup
+
+Install dependencies using pnpm:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Start the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open the app in your browser at:
 
-## Learn More
+```text
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `pnpm dev` - Run the development server
+- `pnpm build` - Build the production application
+- `pnpm start` - Start the production server after build
+- `pnpm lint` - Run ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
+- The app uses the Next.js App Router with nested layouts and route groups.
+- Authentication and dashboard actions are organized inside `app/(authGroup)` and `app/(dashboardGroup)`.
+- The `publicGroup` routes contain the public-facing property listings and review flows.
+- Payment integration routes live under `app/(paymentGroup)`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Build the app and deploy to your hosting provider. For Vercel, use the standard Next.js deployment flow.
+
+```bash
+pnpm build
+pnpm start
+```
+
+## Contact
+
+For help or additional setup details, review the application route structure in `app/` and the API helpers in `service/`.
